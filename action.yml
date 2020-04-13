@@ -1,0 +1,12 @@
+name: 'Release Gateway'
+description: 'Control your releases using push notification approvals, daily schedules and more'
+inputs:
+  token:  # id of input
+    description: 'Release gateway issued token for identifying this project'
+    required: false
+outputs:
+  releaseDecision: # id of output
+    description: 'Decision on whether to allow the release'
+runs:
+  using: 'node12'
+  main: 'index.js'
