@@ -18,7 +18,9 @@ async function init() {
     core.setOutput("releaseDecision", release.releaseStatus);
     if(release.releaseStatus === "ALLOW"){
         // Success
+        console.log('Allowing release');
     } else {
+        console.log('Blocking release');
         core.setOutput("releaseDecision", release.releaseStatus);
         core.setFailed(`Action failed with error ${err}`);
     }
