@@ -11314,7 +11314,7 @@ async function runAction() {
   };
   console.log("Inputs:", JSON.stringify(inputs, null, ""));
   console.log("Creating payload");
-  const payload = createEventPayload(github.context, inputs);
+  const payload = await createEventPayload(github.context, inputs);
 
   try {
     console.log("Sending data");

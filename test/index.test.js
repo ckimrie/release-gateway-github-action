@@ -1,4 +1,7 @@
 const createEventPayload = require("../src/create-event-payload");
+const runAction = require("../src/run-action");
+const { RG_EVENTS_API_URL } = require("../src/constants");
+const nock = require("nock");
 
 const envKeys = [
   "GITHUB_WORKFLOW",
@@ -20,19 +23,40 @@ const envKeys = [
 ];
 
 describe("Github action", () => {
+  beforeAll(() => {
+    nock.disableNetConnect();
+    envKeys.forEach((key, index) => {
+      process.env[key] = key + "_" + index;
+    });
+  });
+
+  afterEach(() => {
+    nock.cleanAll();
+  });
+
+  afterAll(() => {
+    nock.enableNetConnect();
+    envKeys.forEach((key) => {
+      delete process.env[key];
+    });
+  });
+
+  describe("#runAction", () => {
+    it("should send request to event API", async () => {
+      const scope = nock(RG_EVENTS_API_URL)
+        .post(
+          "/events",
+          await createEventPayload({ payload: {} }, { environmentName: "", codeVersion: "" })
+        )
+        .reply(201, "OK");
+
+      expect.assertions(1);
+      await runAction();
+      expect(scope.isDone()).toEqual(true);
+    });
+  });
+
   describe("#createEventPayload", () => {
-    beforeAll(() => {
-      envKeys.forEach((key, index) => {
-        process.env[key] = key + "_" + index;
-      });
-    });
-
-    afterAll(() => {
-      envKeys.forEach((key) => {
-        delete process.env[key];
-      });
-    });
-
     it("should include all github environment variables", async () => {
       const result = await createEventPayload(
         { foo: "bar", biz: { baz: "foo" } },
