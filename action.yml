@@ -1,12 +1,12 @@
 name: 'Release Gateway'
 description: 'Control your releases using push notification approvals, daily schedules and more'
 inputs:
-  token:  # id of input
-    description: 'Release gateway issued token for identifying this project'
+  environment-name:
+    description: 'Name of the environment this release is targeting (eg: prod, test, dev, etc)'
     required: false
-outputs:
-  releaseDecision: # id of output
-    description: 'Decision on whether to allow the release'
+  code-version:
+    description: 'Override the identifier used for the version of code being released (eg: v1, v2.4.2, GIT_SHA etc)'
+    required: false
 runs:
   using: 'node12'
-  main: 'index.js'
+  main: 'dist/index.js'
