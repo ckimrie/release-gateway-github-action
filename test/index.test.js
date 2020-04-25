@@ -15,6 +15,8 @@ const envKeys = [
   "GITHUB_REF",
   "GITHUB_HEAD_REF",
   "GITHUB_BASE_REF",
+  "GITHUB_JOB",
+  "GITHUB_REPOSITORY_OWNER",
 ];
 
 describe("Github action", () => {
@@ -36,7 +38,7 @@ describe("Github action", () => {
         { foo: "bar", biz: { baz: "foo" } },
         { environmentName: "production" }
       );
-      expect(result).toEqual({
+      expect(result).toMatchObject({
         inputs: {
           environmentName: "production",
         },
