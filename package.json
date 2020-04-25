@@ -45,7 +45,7 @@
   "husky": {
     "hooks": {
       "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true",
-      "pre-commit": "npm run build"
+      "pre-commit": "npm run build && git add dist/index.js"
     }
   },
   "prettier": {
