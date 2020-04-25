@@ -25,7 +25,11 @@
             "arrays": "always-multiline",
             "objects": "always-multiline"
         }],
-        "space-before-function-paren": ["error", "never"]
+        "space-before-function-paren": ["error", {
+            "anonymous": "never",
+            "named": "never",
+            "asyncArrow": "always"
+        }]
     },
     "plugins": ["jest", "prettier"]
 }
