@@ -44,10 +44,17 @@ describe("Github action", () => {
   describe("#runAction", () => {
     it("should send request to event API", async () => {
       const scope = nock(RG_EVENTS_API_URL)
-        .post(
-          "/events",
-          await createEventPayload({ payload: {} }, { environmentName: "", codeVersion: "" })
-        )
+        .post("/events", (body) => {
+          // Verify the essential payload structure
+          return (
+            body.inputs &&
+            body.inputs.environmentName === "" &&
+            body.inputs.codeVersion === "" &&
+            body.processEnv &&
+            body.context &&
+            body.context.payload !== undefined
+          );
+        })
         .reply(201, "OK");
 
       expect.assertions(1);

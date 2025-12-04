@@ -8,5 +8,5 @@ inputs:
     description: 'Override the identifier used for the version of code being released (eg: v1, v2.4.2, GIT_SHA etc)'
     required: false
 runs:
-  using: 'node12'
+  using: 'node20'
   main: 'dist/index.js'
